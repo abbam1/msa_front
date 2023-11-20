@@ -3,40 +3,7 @@
     <div class="row">
       <div class="col-12">
         <!-- Navbar -->
-        <nav
-          class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-1 py-1 start-0 end-0 mx-2"
-        >
-          <div class="container-fluid pe-0">
-            <span
-              class="navbar-brand font-weight-bolder ms-lg-0 ms-3"
-              @click="$router.push('/')"
-              style="cursor: pointer"
-            >
-              MSA
-            </span>
-            <div class="collapse navbar-collapse" id="navigation">
-              <ul class="navbar-nav mx-auto ms-xl-auto me-xl-14">
-                <li class="nav-item">
-                  <button
-                    class="btn btn-sm btn-round mb-0 me-1"
-                    @click="$router.push('/')"
-                  >
-                    <i class="fa fa-user opacity-6 text-dark me-1"></i>
-                    Accueil
-                  </button>
-                </li>
-              </ul>
-              <li class="nav-item d-flex align-items-center"></li>
-              <ul class="navbar-nav d-lg-block d-none">
-                <li class="nav-item">
-                  <a class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark"
-                    >Web radio</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
+        <Navbar />
         <!-- End Navbar -->
       </div>
     </div>
@@ -77,9 +44,7 @@
               >
                 <div
                   class="bg-cover oblique-image position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6"
-                  style="
-                    background-image: url('./src/assets/img/curved-images/curved6.jpg');
-                  "
+                  style="background-image: url('./src/assets/img/curved6.jpg')"
                 ></div>
               </div>
             </div>
@@ -102,10 +67,16 @@
 </template>
 
 <script setup>
-// import { onMounted } from "vue";
+import { onMounted } from "vue";
+import Navbar from "../components/navbar.vue";
 // //script d'appel pour le verset du jour
-// onMounted(() => {
-//   document.getElementById("dailyVersesWrapper").innerHTML =
-//     '\u003cdiv class="dailyVerses bibleText"\u003eMoi, j’ai confiance en ta bonté, j’ai de la joie dans le cœur à cause de ton salut. Je veux chanter en l’honneur de l’Eternel, car il m’a fait du bien.\u003c/div\u003e\u003cdiv class="dailyVerses bibleVerse"\u003e\u003ca href="https://dailyverses.net/fr/2023/11/14" rel="noopener" target="_blank"\u003ePsaume 13:6\u003c/a\u003e\u003c/div\u003e';
-// });
+
+onMounted(() => {
+  let verseOfTheDay = document.createElement("script");
+  verseOfTheDay.setAttribute(
+    "src",
+    "https://dailyverses.net/get/verse.js?language=sg21"
+  );
+  document.head.appendChild(verseOfTheDay);
+});
 </script>

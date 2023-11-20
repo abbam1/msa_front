@@ -4,32 +4,34 @@
       <div class="col-12">
         <!-- Navbar -->
         <nav
-          class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-1 py-1 start-0 end-0 mx-2"
+          class="navbar navbar-expand-lg blur blur-rounded top-5 z-index-3 shadow pos my-1 py-1 start-0 end-0 mx-2"
         >
           <div class="container-fluid pe-0">
-            <span
+            <a
+              :href="'/'"
               class="navbar-brand font-weight-bolder ms-lg-0 ms-3"
-              @click="$router.push('/')"
               style="cursor: pointer"
             >
               MSA
-            </span>
+            </a>
             <div class="collapse navbar-collapse" id="navigation">
               <ul class="navbar-nav mx-auto ms-xl-auto me-xl-14">
                 <li class="nav-item">
-                  <button
-                    class="btn btn-sm btn-round mb-0 me-1"
-                    @click="$router.push('/')"
-                  >
-                    <i class="fa fa-user opacity-6 text-dark me-1"></i>
-                    Accueil
-                  </button>
+                  <a :href="'/'">
+                    <button class="btn btn-sm btn-round mb-0 me-1">
+                      <i class="fa fa-user opacity-6 text-dark me-1"></i>
+                      Accueil
+                    </button>
+                  </a>
                 </li>
               </ul>
               <li class="nav-item d-flex align-items-center"></li>
               <ul class="navbar-nav d-lg-block d-none">
                 <li class="nav-item">
-                  <a class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark"
+                  <a
+                    target="_blank"
+                    href="https://collectifdesfreresenchrist.ci/Webradio"
+                    class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark"
                     >Web radio</a
                   >
                 </li>
@@ -50,7 +52,7 @@
               <div class="mt-4" style="width: max-content">
                 <div class="card-header pb-0 bg-transparent">
                   <h3 class="font-weight-bolder">
-                    <img src="../assets/img/curved-images/logo-msa.png" />
+                    <img src="../assets/img/logo-msa.png" />
                     Inscription
                   </h3>
                   <div style="width: 50%">
@@ -82,6 +84,8 @@
                               type="text"
                               class="form-control"
                               placeholder="Sawadogo"
+                              name="nom"
+                              v-model="formData.nom"
                             />
                           </div>
                         </div>
@@ -92,6 +96,8 @@
                               type="text"
                               class="form-control"
                               placeholder="Mariam"
+                              v-model="formData.prenoms"
+                              name="prenoms"
                             />
                           </div>
                         </div>
@@ -111,32 +117,44 @@
                         <div class="label4">
                           <label>Téléphone</label>
                           <div class="mb-3">
-                            <input id="phone" type="tel" class="form-control" />
+                            <input
+                              id="phone"
+                              type="text"
+                              class="form-control"
+                              name="telephone?"
+                            />
                           </div>
                         </div>
                       </div>
                       <div class="part_1">
                         <div class="label5">
-                          <label>Pays</label>
-                          <div class="mb-3">
-                            <input
-                              type="email"
-                              class="form-control"
-                              placeholder="Email"
-                              aria-label="Email"
-                              aria-describedby="email-addon"
-                            />
+                          <label for="pays">Pays</label>
+                          <div class="mb-3" style="margin-right: 5px">
+                            <select
+                              class="form-control form-select"
+                              v-model="formData.paysId"
+                              name="paysId"
+                              id="pays"
+                            >
+                              <option
+                                :value="country"
+                                v-for="country in countries"
+                                :key="country"
+                              >
+                                {{ country }}
+                              </option>
+                            </select>
                           </div>
                         </div>
                         <div class="label6">
                           <label>Ville</label>
                           <div class="mb-3" style="margin-right: 5px">
                             <input
-                              type="email"
+                              type="text"
                               class="form-control"
-                              placeholder="Email"
-                              aria-label="Email"
-                              aria-describedby="email-addon"
+                              name="ville"
+                              placeholder="Abidjan"
+                              v-model="formData.ville"
                             />
                           </div>
                         </div>
@@ -197,17 +215,11 @@
                           </div>
                         </div>
                       </div>
-                      <div class="part">
+                      <div class="part1">
                         <div class="label3">
                           <label>Domaine d’activité</label>
-                          <div class="mb-1">
-                            <input
-                              type="email"
-                              class="form-control"
-                              placeholder="Email"
-                              aria-label="Email"
-                              aria-describedby="email-addon"
-                            />
+                          <div class="input-group">
+                            <input type="text" class="form-control" />
                           </div>
                         </div>
                       </div>
@@ -324,11 +336,10 @@
             </div>
             <div class="col-md-5">
               <img
-                class="position-absolute top-0 h-100 d-md-block d-none me-n8"
+                class="position-absolute top-0 h-100 d-md-block d-none me-n8 imagedroite"
                 style="
-                  background-image: url('./src/assets/img/curved-images/curved9.png');
+                  background-image: url('./src/assets/img/curved9.png');
                   background-size: cover;
-                  width: 35%;
                 "
               />
             </div>
@@ -348,6 +359,13 @@
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
 @media (min-width: 768px) {
+  .image {
+    width: 17% !important;
+  }
+
+  .form-control {
+    width: 13em !important;
+  }
 }
 
 @media (min-width: 1100px) {
@@ -358,6 +376,24 @@
       rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
       rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   }
+
+  .form-control {
+    width: 13em !important;
+  }
+  .pos {
+    position: absolute;
+  }
+}
+@media (min-width: 1900px) {
+  .imagedroite {
+    width: 23% !important;
+  }
+}
+
+@media (min-width: 3000px) {
+  .imagedroite {
+    width: 12% !important;
+  }
 }
 
 /** pour telephone */
@@ -366,10 +402,10 @@
     margin-top: 0px !important;
   }
   .form-control {
-    width: 85% !important;
+    width: 24vh !important;
   }
   .btn {
-    width: 70% !important;
+    width: 40% !important;
   }
   .input-group {
     width: 85% !important;
@@ -436,6 +472,9 @@ body {
   cursor: pointer; /* Added cursor pointer */
 }
 
+.imagedroite {
+  width: 35%;
+}
 .step-line {
   position: absolute;
   top: 16px;
@@ -464,6 +503,8 @@ body {
 </style>
 
 <script>
+import countries from "@/data/countries.js";
+
 export default {
   name: "inscription",
   data() {
@@ -472,6 +513,7 @@ export default {
       isComplete: false,
       input_tel: "",
       formData: {},
+      countries: countries,
     };
   },
   methods: {

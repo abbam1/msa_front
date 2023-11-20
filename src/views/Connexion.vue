@@ -3,40 +3,7 @@
     <div class="row">
       <div class="col-12">
         <!-- Navbar -->
-        <nav
-          class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-1 py-1 start-0 end-0 mx-2"
-        >
-          <div class="container-fluid pe-0">
-            <span
-              class="navbar-brand font-weight-bolder ms-lg-0 ms-3"
-              @click="$router.push('/')"
-              style="cursor: pointer"
-            >
-              MSA
-            </span>
-            <div class="collapse navbar-collapse" id="navigation">
-              <ul class="navbar-nav mx-auto ms-xl-auto me-xl-14">
-                <li class="nav-item">
-                  <button
-                    class="btn btn-sm btn-round mb-0 me-1"
-                    @click="$router.push('/')"
-                  >
-                    <i class="fa fa-user opacity-6 text-dark me-1"></i>
-                    Accueil
-                  </button>
-                </li>
-              </ul>
-              <li class="nav-item d-flex align-items-center"></li>
-              <ul class="navbar-nav d-lg-block d-none">
-                <li class="nav-item">
-                  <a class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark"
-                    >Web radio</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
+        <Navbar />
         <!-- End Navbar -->
       </div>
     </div>
@@ -50,7 +17,7 @@
               <div class="card card-plain mt-8">
                 <div class="card-header pb-0 text-left bg-transparent">
                   <h3 class="font-weight-bolder">
-                    <img src="../assets/img/curved-images/logo-msa.png" />
+                    <img src="../assets/img/logo-msa.png" />
                     Connexion
                   </h3>
                 </div>
@@ -123,7 +90,7 @@
               <img
                 class="position-absolute top-0 h-100 d-md-block d-none me-n8"
                 style="
-                  background-image: url('./src/assets/img/curved-images/curved9.png');
+                  background-image: url('./src/assets/img/curved9.png');
                   background-size: cover;
                   width: 35%;
                 "
@@ -143,6 +110,8 @@
   </main>
 </template>
 <script>
+import Navbar from "../components/navbar.vue";
+
 export default {
   name: "connexion",
   data() {
@@ -151,12 +120,12 @@ export default {
   methods: {
     switchVisibility() {
       const passwordField = document.querySelector("#password");
-
       if (passwordField.getAttribute("type") === "password")
         passwordField.setAttribute("type", "text");
       else passwordField.setAttribute("type", "password");
     },
   },
+  components: { Navbar },
 };
 </script>
 <style scoped>
