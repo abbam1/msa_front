@@ -12,9 +12,10 @@
     >
       <div class="sidenav-header p-3">
         <i
-          class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+          class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-xl-none"
           aria-hidden="true"
           id="iconSidenav"
+          @click="toggle"
         ></i>
         <img
           src="../assets/img/logo1.png"
