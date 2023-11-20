@@ -64,9 +64,10 @@
                     </div>
                     <div class="text-center">
                       <button
-                        type="submit"
+                        type="button"
                         class="btn w-100 mt-2 mb-0"
                         style="background-color: blue; color: white"
+                        @click="$router.push('/dashboard')"
                       >
                         Se connecter
                       </button>
