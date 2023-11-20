@@ -1,9 +1,13 @@
 <template>
-  <div class="g-sidenav-show bg-gray-100">
+  <div
+    class="g-sidenav-show bg-gray-100"
+    :class="{ 'g-sidenav-pinned': store_toggle }"
+  >
     <!-- sidebar -->
 
     <aside
       class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3"
+      :class="{ 'bg-white': store_toggle }"
       id="sidenav-main"
     >
       <div class="sidenav-header p-3">
@@ -91,13 +95,13 @@
               <span class="nav-link-text ms-1">settings</span>
             </a>
           </li>
-          <li class="nav-item" style="margin-top: 5px">
+          <!-- <li class="nav-item" style="margin-top: 5px">
             <a class="nav-link">
               <i class="fa fa-door-open"></i>
 
               <span class="nav-link-text ms-1">Logout</span>
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </aside>
@@ -135,23 +139,23 @@
             <ul class="navbar-nav justify-content-end">
               <li class="nav-item d-flex align-items-center"></li>
               <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-                <a
-                  href="javascript:;"
+                <div
                   class="nav-link text-body p-0"
                   id="iconNavbarSidenav"
+                  @click="toggle"
                 >
                   <div class="sidenav-toggler-inner">
                     <i class="sidenav-toggler-line"></i>
                     <i class="sidenav-toggler-line"></i>
                     <i class="sidenav-toggler-line"></i>
                   </div>
-                </a>
+                </div>
               </li>
               <li class="nav-item px-3 d-flex align-items-center">
-                <a href="javascript:;" class="nav-link text-body p-0">
-                  <i
-                    class="fa fa-cog fixed-plugin-button-nav cursor-pointer"
-                  ></i>
+                <a class="nav-link">
+                  <i class="fa fa-door-open"></i>
+
+                  <span class="nav-link-text ms-1">Logout</span>
                 </a>
               </li>
             </ul>
@@ -405,3 +409,18 @@
     </main>
   </div>
 </template>
+<script>
+import { RouterLink, RouterView } from "vue-router";
+import { useloginStore } from "../stores/login";
+
+export default {
+  computed: {
+    store_toggle() {
+      return useloginStore().isActive;
+    },
+    toggle() {
+      return useloginStore().toggleSidebar;
+    },
+  },
+};
+</script>
