@@ -12,8 +12,13 @@
     <section>
       <div class="page-header min-vh-75">
         <div class="container">
-          <div class="row">
-            <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+          <div
+            class="row"
+            style="    padding-left: 10%;
+    padding-right: 10%;
+}"
+          >
+            <div class="col-lg-5 col-md-6 d-flex flex-column mx-auto">
               <div class="card card-plain mt-8">
                 <div class="card-header pb-0 text-left bg-transparent">
                   <h3 class="font-weight-bolder">
@@ -89,11 +94,10 @@
             </div>
             <div class="col-md-6">
               <img
-                class="position-absolute top-0 h-100 d-md-block d-none me-n8"
+                class="top-0 h-100 d-none d-md-block me-n8 imagedroite"
                 style="
                   background-image: url('./src/assets/img/curved9.png');
                   background-size: cover;
-                  width: 35%;
                 "
               />
             </div>
@@ -130,13 +134,16 @@ export default {
 };
 </script>
 <style scoped>
-@media (min-width: 768px) {
-  .row {
-    margin-left: 100px !important;
-    margin-right: 100px !important;
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
-      rgba(0, 0, 0, 0.22) 0px 10px 10px;
+.imagedroite {
+  width: 100%;
+  position: relative;
+}
+
+@media (min-width: 1100px) {
+  .padding_large {
+    padding-left: 10vh;
+    box-shadow: 0px 25px 20px -20px rgba(0, 0, 0, 0.45),
+      -25px 0 20px -20px rgba(0, 0, 0, 0.45);
   }
 }
 
