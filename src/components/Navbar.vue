@@ -28,9 +28,9 @@
           <li class="nav-item">
             <a
               target="_blank"
-              href="https://collectifdesfreresenchrist.ci/Webradio"
+              href="#"
               class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark"
-              >Web radio</a
+              >Calendrier</a
             >
           </li>
         </ul>
