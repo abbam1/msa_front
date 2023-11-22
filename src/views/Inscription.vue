@@ -30,9 +30,9 @@
                 <li class="nav-item">
                   <a
                     target="_blank"
-                    href="https://collectifdesfreresenchrist.ci/Webradio"
+                    href="#"
                     class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark"
-                    >Web radio</a
+                    >Calendrier</a
                   >
                 </li>
               </ul>
@@ -47,9 +47,11 @@
     <section>
       <div class="page-header min-vh-60">
         <div class="container">
-          <div class="row">
-            <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-auto">
-              <div class="mt-4" style="width: max-content">
+          <div class="row p-1">
+            <div
+              class="col-xl-5 col-lg-5 col-md-6 d-flex flex-column mx-auto padding_large padding_mobile"
+            >
+              <div class="mt-4">
                 <div class="card-header pb-0 bg-transparent">
                   <h3 class="font-weight-bolder">
                     <img src="../assets/img/logo-msa.png" />
@@ -59,7 +61,8 @@
                     <div class="progress px-1 mt-3" style="height: 3px">
                       <div
                         class="progress-bar"
-                        :class="[isComplete ? 'etape_2' : 'etape_1']"
+                        :class="stageClass[step - 1]"
+                        v-bind:class="[]"
                         role="progressbar"
                         aria-valuenow="0"
                         aria-valuemin="0"
@@ -69,73 +72,86 @@
                     <div class="step-container d-flex justify-content-between">
                       <div class="step-circle">1</div>
                       <div class="step-circle">2</div>
+                      <div class="step-circle">3</div>
                     </div>
                   </div>
                 </div>
                 <div class="card-body">
                   <form ref="formulaire" @submit.prevent="voir">
                     <!-- début de étape 1-->
-                    <step1 v-show="step === 1">
-                      <div class="part_1">
-                        <div class="label1">
-                          <label>Nom</label>
-                          <div class="mb-3" style="margin-right: 5px">
+                    <div v-show="step === 1">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label>Nom</label>
+
                             <input
                               type="text"
                               class="form-control"
                               placeholder="Sawadogo"
                               name="nom"
                               v-model="formData.nom"
+                              required
                             />
                           </div>
                         </div>
-                        <div class="label2">
-                          <label>Prénom</label>
-                          <div class="mb-3" style="margin-right: 5px">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label>Prénom</label>
                             <input
                               type="text"
                               class="form-control"
                               placeholder="Mariam"
                               v-model="formData.prenoms"
                               name="prenoms"
+                              required
                             />
                           </div>
                         </div>
                       </div>
-                      <div class="part_1">
-                        <div class="label3">
-                          <label>Date de naissance</label>
-                          <div class="mb-3" style="margin-right: 5px">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label>Date de naissance</label>
+
                             <input
                               type="date"
-                              v-model="formData.date_de_naissance"
-                              name="date_de_naissance"
+                              v-model="formData.dateNaissance"
+                              name="dateNaissance"
                               class="form-control"
                             />
                           </div>
                         </div>
-                        <div class="label4">
-                          <label>Téléphone</label>
-                          <div class="mb-3">
-                            <input
-                              id="phone"
-                              type="text"
-                              class="form-control"
-                              name="telephone?"
-                            />
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label>Sexe</label>
+                            <select
+                              class="form-select"
+                              v-model="formData.sexe"
+                              name="sexe"
+                              required
+                            >
+                              <option value="">Selectionner votre sexe</option>
+                              <option value="M">Masculin</option>
+                              <option value="F">Feminin</option>
+                            </select>
                           </div>
                         </div>
                       </div>
-                      <div class="part_1">
-                        <div class="label5">
-                          <label for="pays">Pays</label>
-                          <div class="mb-3" style="margin-right: 5px">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label>Pays</label>
+
                             <select
                               class="form-control form-select"
                               v-model="formData.paysId"
                               name="paysId"
                               id="pays"
                             >
+                              <option value="" selected>
+                                Sélectionner votre pays
+                              </option>
                               <option
                                 :value="country"
                                 v-for="country in countries"
@@ -146,9 +162,9 @@
                             </select>
                           </div>
                         </div>
-                        <div class="label6">
-                          <label>Ville</label>
-                          <div class="mb-3" style="margin-right: 5px">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label>Ville</label>
                             <input
                               type="text"
                               class="form-control"
@@ -159,162 +175,212 @@
                           </div>
                         </div>
                       </div>
-                      <div class="part_1">
-                        <div class="label7">
-                          <label>Quartier</label>
-                          <div class="mb-3" style="margin-right: 5px">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="form-group">
+                            <label>Quartier</label>
                             <input
-                              type="email"
+                              type="text"
                               class="form-control"
-                              placeholder="Email"
-                              aria-label="Email"
-                              aria-describedby="email-addon"
-                            />
-                          </div>
-                        </div>
-                        <div class="label8">
-                          <label>Nombre d'enfant à charge</label>
-                          <div class="mb-3" style="margin-right: 5px">
-                            <input
-                              type="email"
-                              class="form-control"
-                              placeholder="Email"
-                              aria-label="Email"
-                              aria-describedby="email-addon"
+                              name="quartier"
+                              v-model="formData.quartier"
                             />
                           </div>
                         </div>
                       </div>
-                    </step1>
+                    </div>
                     <!-- fin de étape 1-->
                     <!-- début de étape 2-->
-                    <step2 v-show="step === 2">
-                      <div class="part_1">
-                        <div class="label1">
-                          <label>Année de bâptème</label>
-                          <div class="mb-1" style="margin-right: 5px">
-                            <input
-                              type="email"
-                              class="form-control"
-                              placeholder="Email"
-                              aria-label="Email"
-                              aria-describedby="email-addon"
-                            />
-                          </div>
-                        </div>
-                        <div class="label2">
-                          <label>Statut professionnel</label>
-                          <div class="mb-1" style="margin-right: 5px">
-                            <input
-                              type="email"
-                              class="form-control"
-                              placeholder="Email"
-                              aria-label="Email"
-                              aria-describedby="email-addon"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="part1">
-                        <div class="label3">
-                          <label>Domaine d’activité</label>
-                          <div class="input-group">
-                            <input type="text" class="form-control" />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="part_1">
-                        <div class="label5">
-                          <label>Choisir sa colonne </label>
-                          <div class="mb-1" style="margin-right: 2px">
-                            <input
-                              type="email"
-                              class="form-control"
-                              placeholder="Email"
-                              aria-label="Email"
-                              aria-describedby="email-addon"
-                            />
-                          </div>
-                        </div>
-                        <div class="label6">
-                          <label>Choisir son département</label>
-                          <div class="mb-1" style="margin-right: 5px">
-                            <input
-                              type="email"
-                              class="form-control"
-                              placeholder="Email"
-                              aria-label="Email"
-                              aria-describedby="email-addon"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="part">
-                        <label>Mot de passe</label>
+                    <div v-show="step === 2">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="form-group">
+                            <label>Année de bâptème</label>
 
-                        <div class="input-group">
-                          <input
-                            class="form-control"
-                            id="password"
-                            placeholder="Mot de passe"
-                            type="password"
-                          />
-                          <button
-                            class="input-group-text eye"
-                            type="button"
-                            @click="switchVisibility"
-                          >
-                            <i class="fa fa-eye" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                        <label>Confirmer son mot de passe</label>
-
-                        <div class="input-group mb-2">
-                          <input
-                            class="form-control"
-                            id="confirm_password"
-                            placeholder="Mot de passe"
-                            type="password"
-                          />
-                          <button
-                            class="input-group-text eye"
-                            type="button"
-                            @click="switchVisibility_confirm_password"
-                          >
-                            <i class="fa fa-eye" aria-hidden="true"></i>
-                          </button>
+                            <input
+                              type="date"
+                              v-model="formData.anneeBapteme"
+                              name="anneeBapteme"
+                              class="form-control"
+                            />
+                          </div>
                         </div>
                       </div>
-                    </step2>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label>Email</label>
+
+                            <input
+                              type="email"
+                              v-model="formData.email"
+                              name="email"
+                              placeholder="abba8521@gmail.com"
+                              class="form-control"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label>Téléphone</label>
+
+                            <div>
+                              <input
+                                id="phone"
+                                type="text"
+                                class="form-control"
+                                name="telephone"
+                                v-model="formData.telephone"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="form-group">
+                            <label>Situation matrimoniale</label>
+
+                            <select
+                              class="form-select"
+                              name="situationMatrimoniale"
+                              v-model="formData.situationMatrimoniale"
+                            >
+                              <option value="">
+                                Selectionner votre situation
+                              </option>
+                              <option value="CELIBATAIRE">Célibataire</option>
+                              <option value="CELIBATAIRE_CEINTURE_NOIRE">
+                                Célibataire ceinture noire
+                              </option>
+                              <option value="FIANCE">Fiancé(e)</option>
+                              <option value="MARIE">Marié(e)</option>
+                              <option value="VEUF">Veuf(e)</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="form-group">
+                            <label>Nombre d'enfant à charge</label>
+                            <input
+                              type="number"
+                              class="form-control"
+                              name="nombreEnfants"
+                              v-model="formData.nombreEnfants"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <!-- fin de étape 2-->
-                    <div class="text-center d-flex">
+                    <!-- début de étape 3-->
+                    <div v-show="step === 3">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="form-group">
+                            <label>Choisir son Département</label>
+
+                            <select class="form-select" required>
+                              <option value="">
+                                Selectionner votre departement
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="form-group">
+                            <label>Domaine d'activité</label>
+
+                            <input
+                              type="text"
+                              v-model="formData.domaineActivite"
+                              name="domaineActivite"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="form-group">
+                            <label>Statut professionnel</label>
+
+                            <input
+                              type="text"
+                              v-model="formData.statutProfessionnel"
+                              name=" statutProfessionnel"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <label>Mot de passe </label>
+                          <div class="mb-3">
+                            <div class="form-group" style="position: relative">
+                              <div
+                                class="input-group mb-4"
+                                style="position: relative"
+                              >
+                                <input
+                                  name="password"
+                                  v-model="formData.password"
+                                  class="form-control"
+                                  id="password"
+                                  placeholder="Mot de passe"
+                                  type="password"
+                                  required
+                                />
+                                <button
+                                  class="input-group-text eye"
+                                  type="button"
+                                  @click="switchVisibility"
+                                  style="position: relative"
+                                >
+                                  <i class="fa fa-eye" aria-hidden="true"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- fin de étape 3-->
+                    <div class="text-center row" style="width: 80%">
                       <button
                         type="button"
-                        class="btn w-100 mt-1 mb-2"
+                        class="btn mt-1 mb-2 col"
                         style="
                           background-color: #8392ab;
                           color: white;
                           margin-right: 10px;
                         "
-                        v-if="step == 2"
+                        v-if="step > 1"
                         @click="previous"
                       >
                         Précédant
                       </button>
                       <button
                         type="button"
-                        class="btn w-100 mt-1 mb-2"
+                        class="btn mt-1 mb-2 col"
                         style="background-color: blue; color: white"
-                        v-if="step == 1"
+                        v-if="step < 3"
                         @click="next"
                       >
                         Suivant
                       </button>
                       <button
                         type="submit"
-                        class="btn w-100 mt-1 mb-2"
+                        class="btn mt-1 mb-2 col"
                         style="background-color: blue; color: white"
-                        v-if="step == 2"
+                        v-if="step == 3"
                       >
                         Envoyer
                       </button>
@@ -334,9 +400,9 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
               <img
-                class="position-absolute top-0 h-100 d-md-block d-none me-n8 imagedroite"
+                class="position-absolute top-0 h-100 d-none d-md-block me-n8 imagedroite"
                 style="
                   background-image: url('./src/assets/img/curved9.png');
                   background-size: cover;
@@ -358,32 +424,28 @@
 </template>
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
-@media (min-width: 768px) {
-  .image {
-    width: 17% !important;
-  }
 
-  .form-control {
-    width: 13em !important;
-  }
+@media (min-width: 768px) {
 }
 
 @media (min-width: 1100px) {
-  .row {
-    margin-left: 100px !important;
-    margin-right: 100px !important;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
-      rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
-      rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-  }
-
-  .form-control {
-    width: 13em !important;
-  }
   .pos {
     position: absolute;
   }
+  .form_row {
+    width: 80%;
+  }
+
+  /* .padding_large {
+    padding-left: 10vh;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 10px 0px;
+  } */
+  .form_row1 {
+    width: 100%;
+  }
 }
+
+/** pour ecran 15 pouces et plus */
 @media (min-width: 1900px) {
   .imagedroite {
     width: 23% !important;
@@ -395,20 +457,13 @@
     width: 12% !important;
   }
 }
+/** pour ecran 15 pouces et plus */
 
 /** pour telephone */
 @media (max-width: 767.98px) {
-  .main-content {
-    margin-top: 0px !important;
-  }
-  .form-control {
-    width: 24vh !important;
-  }
-  .btn {
-    width: 40% !important;
-  }
-  .input-group {
-    width: 85% !important;
+  .padding_mobile {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
   }
 }
 /** pour telephone */
@@ -423,22 +478,7 @@
   width: 50%;
 }
 
-.input-group .form-control + .input-group-text {
-  position: relative !important;
-}
-.part_1 {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 #password {
-  border-bottom-left-radius: 0.5rem 0.5rem !important;
-  border-top-left-radius: 0.5rem 0.5rem !important;
-  border-top-right-radius: 0px !important;
-  border-bottom-right-radius: 0px !important;
-}
-
-#confirm_password {
   border-bottom-left-radius: 0.5rem 0.5rem !important;
   border-top-left-radius: 0.5rem 0.5rem !important;
   border-top-right-radius: 0px !important;
@@ -494,10 +534,13 @@ body {
 }
 
 .etape_1 {
+  width: 0%;
+}
+.etape_2 {
   width: 50%;
 }
 
-.etape_2 {
+.etape_3 {
   width: 100%;
 }
 </style>
@@ -510,10 +553,16 @@ export default {
   data() {
     return {
       step: 1,
-      isComplete: false,
+      isHalf: false,
       input_tel: "",
-      formData: {},
+      formData: {
+        nom: "",
+        telephone: "",
+        quartier: "",
+        situationMatrimoniale: "",
+      },
       countries: countries,
+      stageClass: ["etape_1", "etape_2", "etape_3"],
     };
   },
   methods: {
@@ -524,26 +573,21 @@ export default {
         passwordField.setAttribute("type", "text");
       else passwordField.setAttribute("type", "password");
     },
-    switchVisibility_confirm_password() {
-      const passwordField = document.querySelector("#confirm_password");
-
-      if (passwordField.getAttribute("type") === "password")
-        passwordField.setAttribute("type", "text");
-      else passwordField.setAttribute("type", "password");
-    },
 
     voir() {
-      console.log(this.formData.date_de_naissance);
+      console.log(this.formData);
     },
 
     previous() {
       this.step--;
-      this.isComplete = false;
     },
 
     next() {
-      this.step++;
-      this.isComplete = true;
+      if (this.formData.nom == "") {
+        console.log("ca marche pas");
+      } else {
+        this.step++;
+      }
     },
   },
   mounted() {
