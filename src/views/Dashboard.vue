@@ -6,8 +6,7 @@
     <!-- sidebar -->
 
     <aside
-      class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3"
-      :class="{ 'bg-white': store_toggle }"
+      class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-white"
       id="sidenav-main"
     >
       <div class="sidenav-header p-3">
@@ -415,6 +414,25 @@ import { RouterLink, RouterView } from "vue-router";
 import { useloginStore } from "../stores/login";
 
 export default {
+  data() {
+    return {
+      items: [
+        {
+          nom: "Wilfried Fohonke",
+          situation: "Célibataire ceinture noir",
+          domaine: "Entrepreneur",
+          Quartier: "Koumassi",
+        },
+        {
+          nom: "Wilfried ",
+          situation: "Célibataire ",
+          domaine: "Entrepreneur",
+          Quartier: "Koumassi",
+        },
+      ],
+    };
+  },
+
   computed: {
     store_toggle() {
       return useloginStore().isActive;
