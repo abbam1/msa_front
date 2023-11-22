@@ -22,6 +22,15 @@
    * Copyright 2011-2022 Twitter, Inc.
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    */
+
+
+
+
+.iti {
+  display: block !important;
+}
+
+
 :root {
   --bs-blue: #63b3ed;
   --bs-indigo: #596cff;
@@ -417,7 +426,6 @@ button {
 [role="button"] {
   cursor: pointer;
 }
-
 
 [list]:not([type="date"]):not([type="datetime-local"]):not([type="month"]):not(
     [type="week"]
@@ -27240,3 +27248,4 @@ pre[class*="language-"] {
 }
 
 /*# sourceMappingURL=dashboard-free.css.map */
+
