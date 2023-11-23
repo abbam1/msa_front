@@ -91,8 +91,10 @@
                               placeholder="Sawadogo"
                               name="nom"
                               v-model="formData.nom"
-                              required
                             />
+                            <small style="color: red">
+                              {{ errorStage.nom ? errorMessages.nom : "" }}
+                            </small>
                           </div>
                         </div>
                         <div class="col-lg-6">
@@ -104,8 +106,12 @@
                               placeholder="Mariam"
                               v-model="formData.prenoms"
                               name="prenoms"
-                              required
                             />
+                            <small style="color: red">
+                              {{
+                                errorStage.prenoms ? errorMessages.prenoms : ""
+                              }}
+                            </small>
                           </div>
                         </div>
                       </div>
@@ -129,12 +135,14 @@
                               class="form-select"
                               v-model="formData.sexe"
                               name="sexe"
-                              required
                             >
                               <option value="">Selectionner votre sexe</option>
                               <option value="M">Masculin</option>
                               <option value="F">Feminin</option>
                             </select>
+                            <small style="color: red">
+                              {{ errorStage.sexe ? errorMessages.sexe : "" }}
+                            </small>
                           </div>
                         </div>
                       </div>
@@ -217,9 +225,11 @@
                               name="email"
                               placeholder="abba8521@gmail.com"
                               class="form-control"
-                              required
                             />
                           </div>
+                          <small style="color: red">
+                            {{ errorStage.email ? errorMessages.email : "" }}
+                          </small>
                         </div>
                         <div class="col-lg-6">
                           <div class="form-group">
@@ -288,6 +298,7 @@
                               <option value="">
                                 Selectionner votre departement
                               </option>
+                              <option value="test">test</option>
                             </select>
                           </div>
                         </div>
@@ -557,12 +568,36 @@ export default {
       input_tel: "",
       formData: {
         nom: "",
+        prenoms: "",
+        email: "",
+        password: "",
         telephone: "",
         quartier: "",
         situationMatrimoniale: "",
+        sexe: "",
+        departementId: "",
+        ville: "",
+        dateNaissance: "",
+        anneeBapteme: "",
+        statutProfessionnel: "",
+        domaineActivite: "",
+        nombreEnfants: "",
+        paysId: "",
       },
       countries: countries,
       stageClass: ["etape_1", "etape_2", "etape_3"],
+      errorMessages: {
+        nom: "Le nom est obligatoire",
+        prenoms: "Le prenoms est obligatoire",
+        email: "L'email est obligatoire",
+        sexe: "Le sexe est obligatoire",
+      },
+      errorStage: {
+        nom: false,
+        prenoms: false,
+        email: false,
+        sexe: false,
+      },
     };
   },
   methods: {
@@ -583,9 +618,51 @@ export default {
     },
 
     next() {
-      if (this.formData.nom == "") {
-        console.log("ca marche pas");
-      } else {
+      let passing = true;
+      switch (this.step) {
+        case 1:
+          if (this.formData.nom == "") {
+            passing = false;
+            this.errorStage.nom = true;
+          } else {
+            passing = true;
+            this.errorStage.nom = false;
+          }
+
+          if (this.formData.prenoms == "") {
+            passing = false;
+            this.errorStage.prenoms = true;
+          } else {
+            passing = true;
+            this.errorStage.prenoms = false;
+          }
+
+          if (this.formData.sexe == "") {
+            passing = false;
+            this.errorStage.sexe = true;
+          } else {
+            passing = true;
+            this.errorStage.sexe = false;
+          }
+
+          break;
+        case 2:
+          if (this.formData.email == "") {
+            passing = false;
+            this.errorStage.email = true;
+          } else {
+            passing = true;
+            this.errorStage.email = false;
+          }
+
+          break;
+
+        default:
+          passing = false;
+          break;
+      }
+
+      if (passing) {
         this.step++;
       }
     },
