@@ -194,17 +194,35 @@
                 <h6 class="mb-0" style="width: 70%">
                   Les membres de la colonne sélectionnée
                 </h6>
-                <input
-                  style="width: 30%"
-                  type="text"
-                  class="form-control"
-                  placeholder="Rechercher..."
-                />
+                <div class="col">
+                  <input
+                    style="width: 100%"
+                    type="text"
+                    class="form-control row"
+                    placeholder="Rechercher..."
+                    v-model="input_search"
+                  />
+                  <span
+                    v-if="input_search && getFilterUsers.length > 0"
+                    class="text-dark font-weight-bold mt-1 row"
+                    >{{ getFilterUsers.length }} membre<span
+                      style="width: 0%; padding-left: 0px"
+                      v-if="getFilterUsers.length > 1"
+                      >s</span
+                    >
+                    trouvé<span
+                      style="width: 0%; padding-left: 0px"
+                      v-if="getFilterUsers.length > 1"
+                      >s</span
+                    ></span
+                  >
+                </div>
               </div>
 
               <div class="card-body pt-4 p-3">
                 <ul class="list-group">
                   <li
+                    v-for="item in getFilterUsers"
                     class="list-group-item row border-0 d-flex p-4 mb-2 border-radius-lg"
                     style="box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px"
                   >
@@ -213,116 +231,65 @@
                         <img
                           class="border-radius-md"
                           style="width: 10em; height: 10em"
-                          src="../assets/img/user1.png"
+                          :src="item.img"
                         />
                       </div>
                     </div>
                     <div class="col-lg-9">
-                      <h6 class="mb-3 text-sm">Wilfried Fohonke</h6>
+                      <h6 class="mb-3 text-sm">{{ item.nom }}</h6>
                       <div class="row">
                         <div class="d-flex flex-column col-lg-6">
                           <span class="mb-2 text-xs"
                             >Situation matrimoniale:
-                            <span class="text-dark font-weight-bold ms-sm-2"
-                              >Célibataire ceinture noir</span
-                            ></span
+                            <span class="text-dark font-weight-bold ms-sm-2">{{
+                              item.situation
+                            }}</span></span
                           >
                           <span class="mb-2 text-xs"
                             >Domaine d'activité:
                             <span class="text-dark ms-sm-2 font-weight-bold"
-                              >Entrepreneur
+                              >{{ item.domaine }}
                             </span></span
                           >
                           <span class="text-xs"
                             >Quartier:
-                            <span class="text-dark ms-sm-2 font-weight-bold"
-                              >Koumassi</span
-                            ></span
+                            <span class="text-dark ms-sm-2 font-weight-bold">{{
+                              item.Quartier
+                            }}</span></span
                           >
                         </div>
                         <div class="d-flex flex-column col-lg-6">
                           <span class="mb-2 text-xs"
                             >Colonne:
-                            <span class="text-dark font-weight-bold ms-sm-2"
-                              >Shalom , département Acceuil</span
-                            ></span
+                            <span class="text-dark font-weight-bold ms-sm-2">{{
+                              item.colonne
+                            }}</span></span
                           >
                           <span class="mb-2 text-xs"
                             >Email:
-                            <span class="text-dark ms-sm-2 font-weight-bold"
-                              >oliver@burrito.com</span
-                            ></span
+                            <span class="text-dark ms-sm-2 font-weight-bold">{{
+                              item.email
+                            }}</span></span
                           >
                           <span class="text-xs"
-                            >Contact:
-                            <span class="text-dark ms-sm-2 font-weight-bold"
-                              >+225 0709174551</span
-                            ></span
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li
-                    class="list-group-item row border-0 d-flex p-4 mb-2 border-radius-lg"
-                    style="box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px"
-                  >
-                    <div class="col-lg-3 mb-1">
-                      <div class="p-2">
-                        <img
-                          class="border-radius-md"
-                          style="width: 10em; height: 10em"
-                          src="../assets/img/user1.png"
-                        />
-                      </div>
-                    </div>
-                    <div class="col-lg-9">
-                      <h6 class="mb-3 text-sm">Wilfried Fohonke</h6>
-                      <div class="row">
-                        <div class="d-flex flex-column col-lg-6">
-                          <span class="mb-2 text-xs"
-                            >Situation matrimoniale:
-                            <span class="text-dark font-weight-bold ms-sm-2"
-                              >Célibataire ceinture noir</span
-                            ></span
-                          >
-                          <span class="mb-2 text-xs"
-                            >Domaine d'activité:
-                            <span class="text-dark ms-sm-2 font-weight-bold"
-                              >Entrepreneur
-                            </span></span
-                          >
-                          <span class="text-xs"
-                            >Quartier:
-                            <span class="text-dark ms-sm-2 font-weight-bold"
-                              >Koumassi</span
-                            ></span
-                          >
-                        </div>
-                        <div class="d-flex flex-column col-lg-6">
-                          <span class="mb-2 text-xs"
-                            >Colonne:
-                            <span class="text-dark font-weight-bold ms-sm-2"
-                              >Shalom , département Acceuil</span
-                            ></span
-                          >
-                          <span class="mb-2 text-xs"
-                            >Email:
-                            <span class="text-dark ms-sm-2 font-weight-bold"
-                              >oliver@burrito.com</span
-                            ></span
-                          >
-                          <span class="text-xs"
-                            >Contact:
-                            <span class="text-dark ms-sm-2 font-weight-bold"
-                              >+225 0709174551</span
-                            ></span
+                            >statut Professionnel:
+                            <span class="text-dark ms-sm-2 font-weight-bold">{{
+                              item.statut
+                            }}</span></span
                           >
                         </div>
                       </div>
                     </div>
                   </li>
                 </ul>
+              </div>
+              <div class="card-body pt-4 p-3">
+                <div
+                  class="item error"
+                  v-if="input_search && !getFilterUsers.length"
+                >
+                  <h3>Pas de resultats!</h3>
+                </div>
               </div>
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
@@ -373,17 +340,7 @@
                   </p>
 
                   <div class="row justify-content-center text-center">
-                    <hr
-                      class="horizontal dark mt-0"
-                      style="
-                        background-image: linear-gradient(
-                          to right,
-                          #000,
-                          rgba(0, 0, 0, 0.4),
-                          #000
-                        ) !important;
-                      "
-                    />
+                    <hr class="horizontal dark mt-0 style" />
                   </div>
                 </div>
               </div>
@@ -409,6 +366,16 @@
     </main>
   </div>
 </template>
+<style>
+.style {
+  background-image: linear-gradient(
+    to right,
+    #000,
+    rgba(0, 0, 0, 0.4),
+    #000
+  ) !important;
+}
+</style>
 <script>
 import { RouterLink, RouterView } from "vue-router";
 import { useloginStore } from "../stores/login";
@@ -416,18 +383,37 @@ import { useloginStore } from "../stores/login";
 export default {
   data() {
     return {
+      input_search: "",
       items: [
         {
+          img: "/src/assets/img/user1.png",
           nom: "Wilfried Fohonke",
           situation: "Célibataire ceinture noir",
           domaine: "Entrepreneur",
           Quartier: "Koumassi",
+          colonne: "Shalom , département Acceuil",
+          email: "abba@gmail.com",
+          statut: "salarié",
         },
         {
-          nom: "Wilfried ",
+          img: "/src/assets/img/user2.png",
+          nom: "Abba Marc",
           situation: "Célibataire ",
           domaine: "Entrepreneur",
           Quartier: "Koumassi",
+          colonne: "ddddddd , département Acceuil",
+          email: "zaza@gmail.com",
+          statut: "Riche",
+        },
+        {
+          img: "/src/assets/img/user.png",
+          nom: "Franck Yao",
+          situation: "Fiancé ",
+          domaine: "Marcheur",
+          Quartier: "cocody",
+          colonne: "Tjah , département T",
+          email: "zssdd@gmail.com",
+          statut: "Moyen",
         },
       ],
     };
@@ -439,6 +425,12 @@ export default {
     },
     toggle() {
       return useloginStore().toggleSidebar;
+    },
+
+    getFilterUsers() {
+      return this.items.filter((item) =>
+        item.nom.toLowerCase().includes(this.input_search.toLowerCase())
+      );
     },
   },
 };
