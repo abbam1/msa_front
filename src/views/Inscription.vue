@@ -589,7 +589,7 @@ export default {
       errorMessages: {
         nom: "Le nom est obligatoire",
         prenoms: "Le prenoms est obligatoire",
-        email: "L'email est obligatoire",
+        email: "L'email est invalide",
         sexe: "Le sexe est obligatoire",
       },
       errorStage: {
@@ -600,6 +600,12 @@ export default {
       },
     };
   },
+
+  computed: {
+    isValidEmail() {
+      return /^[^@]+@\w+(\.\w+)+\w$/.test(this.formData.email);
+    },
+  },
   methods: {
     switchVisibility() {
       const passwordField = document.querySelector("#password");
@@ -608,6 +614,12 @@ export default {
         passwordField.setAttribute("type", "text");
       else passwordField.setAttribute("type", "password");
     },
+
+    // isValidEmail(value) {
+    //   return console.log(
+    //     /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)
+    //   );
+    // },
 
     voir() {
       console.log(this.formData);
@@ -647,7 +659,7 @@ export default {
 
           break;
         case 2:
-          if (this.formData.email == "") {
+          if (this.formData.email == "" || this.isValidEmail == false) {
             passing = false;
             this.errorStage.email = true;
           } else {
@@ -667,6 +679,7 @@ export default {
       }
     },
   },
+
   mounted() {
     let formData = new FormData(this.$refs.editContribuablesForm);
 

@@ -21,7 +21,7 @@
           class="navbar-brand-img h-100"
           alt="main_logo"
         />
-        <span class="ms-1 font-weight-bold">Tableau de bord</span>
+        <a :href="'/'" class="ms-1 font-weight-bold">Tableau de bord</a>
       </div>
       <hr class="horizontal dark mt-0" />
       <div class="navbar-collapse h-auto w-auto">
@@ -95,13 +95,13 @@
               <span class="nav-link-text ms-1">settings</span>
             </a>
           </li>
-          <!-- <li class="nav-item" style="margin-top: 5px">
+          <li class="nav-item" style="margin-top: 5px">
             <a class="nav-link">
               <i class="fa fa-door-open"></i>
 
               <span class="nav-link-text ms-1">Logout</span>
             </a>
-          </li> -->
+          </li>
         </ul>
       </div>
     </aside>
@@ -112,7 +112,7 @@
     >
       <!-- Navbar -->
       <nav
-        class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl"
+        class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl barre_haut"
         id="navbarBlur"
         navbar-scroll="true"
       >
@@ -124,7 +124,7 @@
             class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4"
             id="navbar"
           >
-            <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <!-- <div class="ms-md-auto pe-md-3 d-flex align-items-center">
               <div class="input-group">
                 <span class="input-group-text text-body"
                   ><i class="fas fa-search" aria-hidden="true"></i
@@ -135,8 +135,11 @@
                   placeholder="Rechercher..."
                 />
               </div>
-            </div>
-            <ul class="navbar-nav justify-content-end">
+            </div> -->
+            <ul
+              class="navbar-nav justify-content-end"
+              style="margin-left: 95% !important"
+            >
               <li class="nav-item d-flex align-items-center"></li>
               <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                 <div
@@ -151,19 +154,19 @@
                   </div>
                 </div>
               </li>
-              <li class="nav-item px-3 d-flex align-items-center">
+              <!-- <li class="nav-item px-3 d-flex align-items-center">
                 <a class="nav-link">
                   <i class="fa fa-door-open"></i>
 
                   <span class="nav-link-text ms-1">Logout</span>
                 </a>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
       </nav>
       <!-- End Navbar -->
-      <div class="container-fluid py-4">
+      <div class="container-fluid">
         <div class="row">
           <div class="col-md-9 mt-4">
             <div class="card mt-0 mb-3">
@@ -192,7 +195,14 @@
             <div class="card">
               <div class="card-header pb-0 px-3 d-flex">
                 <h6 class="mb-0" style="width: 70%">
-                  Les membres de la colonne sélectionnée
+                  Les membres de Achija
+                  <select v-model="perPage">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                  </select>
                 </h6>
                 <div class="col">
                   <input
@@ -222,7 +232,7 @@
               <div class="card-body pt-4 p-3">
                 <ul class="list-group">
                   <li
-                    v-for="item in getFilterUsers"
+                    v-for="item in printedItems"
                     class="list-group-item row border-0 d-flex p-4 mb-2 border-radius-lg"
                     style="box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px"
                   >
@@ -293,23 +303,60 @@
               </div>
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="javascript:;" tabindex="-1">
+                  <li
+                    :class="'page-item ' + (page == 1 ? 'disabled' : '')"
+                    :role="page == 1 ? '' : 'button'"
+                  >
+                    <a
+                      class="page-link"
+                      @click.prevent="previous"
+                      tabindex="-1"
+                    >
                       <i class="fa fa-angle-left"></i>
-                      <span class="sr-only">Previous</span>
+                      <span class="sr-only" role="button">Previous</span>
                     </a>
                   </li>
-                  <li class="page-item">
-                    <a class="page-link" href="javascript:;">1</a>
+                  <template v-for="n in this.totalPage">
+                    <li class="page-item" v-if="n < 4">
+                      <a
+                        class="page-link"
+                        role="button"
+                        @click.prevent="page = n"
+                        >{{ n }}</a
+                      >
+                    </li>
+                  </template>
+                  <li class="page-item" v-if="totalPage == 4">
+                    <a
+                      class="page-link"
+                      role="button"
+                      @click.prevent="page = totalPage"
+                      >{{ totalPage }}</a
+                    >
                   </li>
-                  <li class="page-item">
-                    <a class="page-link" href="javascript:;">2</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="javascript:;">3</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="javascript:;">
+                  <template v-if="totalPage > 4">
+                    <li class="page-item">
+                      <a class="page-link" role="button" @click.prevent=""
+                        >...</a
+                      >
+                    </li>
+                    <li class="page-item">
+                      <a
+                        class="page-link"
+                        role="button"
+                        @click.prevent="page = totalPage"
+                        >{{ totalPage }}</a
+                      >
+                    </li>
+                  </template>
+
+                  <li
+                    :class="
+                      'page-item ' + (page == totalPage ? 'disabled' : '')
+                    "
+                    :role="page == totalPage ? '' : 'button'"
+                  >
+                    <a class="page-link" @click.prevent="nextElement">
                       <i class="fa fa-angle-right"></i>
                       <span class="sr-only">Next</span>
                     </a>
@@ -367,6 +414,11 @@
   </div>
 </template>
 <style>
+@media (min-width: 1100px) {
+  .barre_haut {
+    display: none;
+  }
+}
 .style {
   background-image: linear-gradient(
     to right,
@@ -374,6 +426,11 @@
     rgba(0, 0, 0, 0.4),
     #000
   ) !important;
+}
+
+.navbar-vertical .navbar-nav > .nav-item .nav-link.active {
+  color: #dee2e6 !important;
+  background-color: #141727 !important;
 }
 </style>
 <script>
@@ -415,7 +472,79 @@ export default {
           email: "zssdd@gmail.com",
           statut: "Moyen",
         },
+        {
+          img: "/src/assets/img/user.png",
+          nom: "Franck Yao",
+          situation: "Fiancé ",
+          domaine: "Marcheur",
+          Quartier: "cocody",
+          colonne: "Tjah , département T",
+          email: "zssdd@gmail.com",
+          statut: "Moyen",
+        },
+        {
+          img: "/src/assets/img/user.png",
+          nom: "Franck Yao",
+          situation: "Fiancé ",
+          domaine: "Marcheur",
+          Quartier: "cocody",
+          colonne: "Tjah , département T",
+          email: "zssdd@gmail.com",
+          statut: "Moyen",
+        },
+        {
+          img: "/src/assets/img/user.png",
+          nom: "Franck Isaac",
+          situation: "Fiancé ",
+          domaine: "Marcheur",
+          Quartier: "cocody",
+          colonne: "Tjah , département T",
+          email: "zssdd@gmail.com",
+          statut: "Moyen",
+        },
+        {
+          img: "/src/assets/img/user.png",
+          nom: "Franck Isaac",
+          situation: "Fiancé ",
+          domaine: "Marcheur",
+          Quartier: "cocody",
+          colonne: "Tjah , département T",
+          email: "zssdd@gmail.com",
+          statut: "Moyen",
+        },
+        {
+          img: "/src/assets/img/user.png",
+          nom: "Franck Isaac",
+          situation: "Fiancé ",
+          domaine: "Marcheur",
+          Quartier: "cocody",
+          colonne: "Tjah , département T",
+          email: "zssdd@gmail.com",
+          statut: "Moyen",
+        },
+        {
+          img: "/src/assets/img/user.png",
+          nom: "Franck Isaac",
+          situation: "Fiancé ",
+          domaine: "Marcheur",
+          Quartier: "cocody",
+          colonne: "Tjah , département T",
+          email: "zssdd@gmail.com",
+          statut: "Moyen",
+        },
+        {
+          img: "/src/assets/img/user.png",
+          nom: "Franck Isaac",
+          situation: "Fiancé ",
+          domaine: "Marcheur",
+          Quartier: "cocody",
+          colonne: "Tjah , département T",
+          email: "zssdd@gmail.com",
+          statut: "Moyen",
+        },
       ],
+      page: 1,
+      perPage: 3,
     };
   },
 
@@ -431,6 +560,35 @@ export default {
       return this.items.filter((item) =>
         item.nom.toLowerCase().includes(this.input_search.toLowerCase())
       );
+    },
+    totalPage() {
+      return Math.ceil(this.items.length / this.perPage);
+    },
+    printedItems() {
+      let min = 1 + (this.page * this.perPage - this.perPage);
+      let max = Math.min(
+        min + Number(this.perPage) - 1,
+        this.getFilterUsers.length
+      );
+      let dt = [];
+
+      for (let i = min - 1; i < max; i++) {
+        dt.push(this.getFilterUsers[i]);
+      }
+
+      return dt;
+    },
+  },
+  methods: {
+    previous() {
+      if (this.page > 1) {
+        this.page--;
+      }
+    },
+    nextElement() {
+      if (this.page < this.totalPage) {
+        this.page++;
+      }
     },
   },
 };

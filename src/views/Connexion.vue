@@ -12,12 +12,7 @@
     <section>
       <div class="page-header min-vh-75">
         <div class="container">
-          <div
-            class="row"
-            style="    padding-left: 10%;
-    padding-right: 10%;
-}"
-          >
+          <div class="row" style="padding-left: 10%;padding-right: 10%;}">
             <div class="col-lg-5 col-md-6 d-flex flex-column mx-auto">
               <div class="card card-plain mt-8">
                 <div class="card-header pb-0 text-left bg-transparent">
@@ -27,15 +22,16 @@
                   </h3>
                 </div>
                 <div class="card-body">
-                  <form role="form">
+                  <form role="form" @submit.prevent="voir">
                     <label>Email</label>
                     <div class="mb-3">
                       <input
                         type="email"
+                        name="email"
+                        v-model="formData.email"
                         class="form-control"
                         placeholder="Email"
-                        aria-label="Email"
-                        aria-describedby="email-addon"
+                        required
                       />
                     </div>
                     <label>Mot de passe </label>
@@ -45,8 +41,11 @@
                           <input
                             class="form-control"
                             id="password"
+                            name="password"
+                            v-model="formData.password"
                             placeholder="Mot de passe"
                             type="password"
+                            required
                           />
                           <button
                             class="input-group-text eye"
@@ -69,10 +68,9 @@
                     </div>
                     <div class="text-center">
                       <button
-                        type="button"
+                        type="submit"
                         class="btn w-100 mt-2 mb-0"
                         style="background-color: blue; color: white"
-                        @click="$router.push('/dashboard')"
                       >
                         Se connecter
                       </button>
@@ -120,7 +118,12 @@ import Navbar from "../components/navbar.vue";
 export default {
   name: "connexion",
   data() {
-    return {};
+    return {
+      formData: {
+        email: "",
+        password: "",
+      },
+    };
   },
   methods: {
     switchVisibility() {
@@ -129,11 +132,18 @@ export default {
         passwordField.setAttribute("type", "text");
       else passwordField.setAttribute("type", "password");
     },
+
+    voir() {
+      console.log(this.formData);
+    },
   },
   components: { Navbar },
 };
 </script>
 <style scoped>
+/** code pour aller dans le dashboard */
+/** @click="$router.push('/dashboard')" */
+
 .imagedroite {
   width: 100%;
   position: relative;
@@ -153,7 +163,7 @@ export default {
     margin-top: 0px !important;
   }
 }
-/** pour telephone */
+/** pour telephone  */
 
 .input-group .form-control + .input-group-text {
   position: relative !important;
