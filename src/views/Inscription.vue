@@ -30,9 +30,9 @@
                 <li class="nav-item">
                   <a
                     target="_blank"
-                    href="#"
+                    :href="'/dashboard'"
                     class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark"
-                    >Calendrier</a
+                    >Dashboard</a
                   >
                 </li>
               </ul>
@@ -367,12 +367,7 @@
                     <div class="text-center row" style="width: 80%">
                       <button
                         type="button"
-                        class="btn mt-1 mb-2 col"
-                        style="
-                          background-color: #8392ab;
-                          color: white;
-                          margin-right: 10px;
-                        "
+                        class="btn mt-1 mb-2 col styles"
                         v-if="step > 1"
                         @click="previous"
                       >
@@ -481,6 +476,12 @@
 
 .eye {
   position: relative;
+}
+
+.styles {
+  background-color: #8392ab;
+  color: white;
+  margin-right: 10px;
 }
 .page-header {
   overflow: visible !important;

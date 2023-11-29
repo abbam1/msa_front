@@ -27,10 +27,9 @@
         <ul class="navbar-nav d-lg-block d-none">
           <li class="nav-item">
             <a
-              target="_blank"
-              href="#"
+              :href="'/dashboard'"
               class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark"
-              >Calendrier</a
+              >Dashboard</a
             >
           </li>
         </ul>
