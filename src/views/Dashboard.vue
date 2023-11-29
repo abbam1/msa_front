@@ -96,7 +96,7 @@
             </a>
           </li>
           <li class="nav-item" style="margin-top: 5px">
-            <a class="nav-link">
+            <a class="nav-link" :href="'/'">
               <i class="fa fa-door-open"></i>
 
               <span class="nav-link-text ms-1">Logout</span>

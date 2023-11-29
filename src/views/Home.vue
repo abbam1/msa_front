@@ -69,8 +69,8 @@
 <script setup>
 import { onMounted } from "vue";
 import Navbar from "../components/navbar.vue";
-// //script d'appel pour le verset du jour
 
+//script d'appel pour le verset du jour
 onMounted(() => {
   let verseOfTheDay = document.createElement("script");
   verseOfTheDay.setAttribute(
