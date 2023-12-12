@@ -43,8 +43,7 @@
                 class="top-0 oblique position-absolute h-100 d-md-block d-none me-n8"
               >
                 <div
-                  class="bg-cover oblique-image position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6"
-                  style="background-image: url('./src/assets/img/curved6.jpg')"
+                  class="bg-cover oblique-image arriere_plan position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6"
                 ></div>
               </div>
             </div>
@@ -65,6 +64,12 @@
     </div>
   </footer>
 </template>
+
+<style scoped>
+.arriere_plan {
+  background-image: url("@/assets/img/curved6.jpg");
+}
+</style>
 
 <script setup>
 import { onMounted } from "vue";

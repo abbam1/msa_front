@@ -436,6 +436,9 @@
 <script>
 import { RouterLink, RouterView } from "vue-router";
 import { useloginStore } from "../stores/login";
+import image1 from "/src/assets/img/user1.png";
+import image2 from "/src/assets/img/user2.png";
+import image from "/src/assets/img/user.png";
 
 export default {
   data() {
@@ -443,7 +446,7 @@ export default {
       input_search: "",
       items: [
         {
-          img: "/src/assets/img/user1.png",
+          img: image1,
           nom: "Wilfried Fohonke",
           situation: "Célibataire ceinture noir",
           domaine: "Entrepreneur",
@@ -453,7 +456,7 @@ export default {
           statut: "salarié",
         },
         {
-          img: "/src/assets/img/user2.png",
+          img: image2,
           nom: "Abba Marc",
           situation: "Célibataire ",
           domaine: "Entrepreneur",
@@ -463,7 +466,7 @@ export default {
           statut: "Riche",
         },
         {
-          img: "/src/assets/img/user.png",
+          img: image,
           nom: "Franck Yao",
           situation: "Fiancé ",
           domaine: "Marcheur",
@@ -473,7 +476,7 @@ export default {
           statut: "Moyen",
         },
         {
-          img: "/src/assets/img/user.png",
+          img: image,
           nom: "Franck Yao",
           situation: "Fiancé ",
           domaine: "Marcheur",
@@ -483,7 +486,7 @@ export default {
           statut: "Moyen",
         },
         {
-          img: "/src/assets/img/user.png",
+          img: image,
           nom: "Franck Yao",
           situation: "Fiancé ",
           domaine: "Marcheur",
@@ -493,7 +496,7 @@ export default {
           statut: "Moyen",
         },
         {
-          img: "/src/assets/img/user.png",
+          img: image,
           nom: "Franck Isaac",
           situation: "Fiancé ",
           domaine: "Marcheur",
@@ -503,7 +506,7 @@ export default {
           statut: "Moyen",
         },
         {
-          img: "/src/assets/img/user.png",
+          img: image,
           nom: "Franck Isaac",
           situation: "Fiancé ",
           domaine: "Marcheur",
@@ -513,7 +516,7 @@ export default {
           statut: "Moyen",
         },
         {
-          img: "/src/assets/img/user.png",
+          img: image,
           nom: "Franck Isaac",
           situation: "Fiancé ",
           domaine: "Marcheur",
@@ -523,7 +526,7 @@ export default {
           statut: "Moyen",
         },
         {
-          img: "/src/assets/img/user.png",
+          img: image,
           nom: "Franck Isaac",
           situation: "Fiancé ",
           domaine: "Marcheur",
@@ -533,7 +536,7 @@ export default {
           statut: "Moyen",
         },
         {
-          img: "/src/assets/img/user.png",
+          img: image,
           nom: "Franck Isaac",
           situation: "Fiancé ",
           domaine: "Marcheur",

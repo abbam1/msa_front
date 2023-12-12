@@ -23,18 +23,19 @@
                 </div>
                 <div class="card-body">
                   <form role="form" @submit.prevent="voir">
-                    <label>Email</label>
+                    <label for="mail">Email</label>
                     <div class="mb-3">
                       <input
                         type="email"
                         name="email"
+                        id="mail"
                         v-model="formData.email"
                         class="form-control"
                         placeholder="Email"
                         required
                       />
                     </div>
-                    <label>Mot de passe </label>
+                    <label for="password">Mot de passe </label>
                     <div class="mb-3">
                       <div class="form-group">
                         <div class="input-group mb-4">
@@ -92,11 +93,7 @@
             </div>
             <div class="col-md-6">
               <img
-                class="top-0 h-100 d-none d-md-block me-n8 imagedroite"
-                style="
-                  background-image: url('./src/assets/img/curved9.png');
-                  background-size: cover;
-                "
+                class="top-0 h-100 d-none d-md-block me-n8 arriere_plan imagedroite"
               />
             </div>
           </div>
@@ -114,6 +111,7 @@
 </template>
 <script>
 import Navbar from "../components/navbar.vue";
+import axios from "axios";
 
 export default {
   name: "connexion",
@@ -136,6 +134,46 @@ export default {
     voir() {
       console.log(this.formData);
     },
+
+    formLogin() {
+      Swal.fire({
+        title: "Chargement!",
+        html: "Connexion en cours...",
+        allowOutsideClick: false,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+      axios
+        .post(`${import.meta.env.BASE_URL}/login`, this.formData)
+        .then((response) => {
+          swal.close();
+          const stores = useloginStore();
+          let dt = response.data;
+          if (response.data.success) {
+            stores.setLogin(dt.data);
+            this.$router.push({ name: "dashboard" });
+            let timerInterval;
+            Swal.fire({
+              title: "Bienvenue!",
+              html: "Veuillez patientez svp...",
+              timer: 1000,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading();
+              },
+              willClose: () => {
+                clearInterval(timerInterval);
+              },
+            });
+          }
+        })
+        .catch((err) => {
+          Swal.fire("Erreur!", "Impossible de se connecter", "error");
+        });
+    },
   },
   components: { Navbar },
 };
@@ -143,6 +181,11 @@ export default {
 <style scoped>
 /** code pour aller dans le dashboard */
 /** @click="$router.push('/dashboard')" */
+
+.arriere_plan {
+  background-image: url("@/assets/img/curved9.png");
+  background-size: cover;
+}
 
 .imagedroite {
   width: 100%;

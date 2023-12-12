@@ -408,11 +408,7 @@
             </div>
             <div class="col-md-6">
               <img
-                class="position-absolute top-0 h-100 d-none d-md-block me-n8 imagedroite"
-                style="
-                  background-image: url('./src/assets/img/curved9.png');
-                  background-size: cover;
-                "
+                class="position-absolute arriere_plan top-0 h-100 d-none d-md-block me-n8 imagedroite"
               />
             </div>
           </div>
@@ -554,6 +550,11 @@ body {
 
 .etape_3 {
   width: 100%;
+}
+
+.arriere_plan {
+  background-image: url("@/assets/img/curved9.png");
+  background-size: cover;
 }
 </style>
 
