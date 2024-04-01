@@ -62,7 +62,6 @@
                       <div
                         class="progress-bar"
                         :class="stageClass[step - 1]"
-                        v-bind:class="[]"
                         role="progressbar"
                         aria-valuenow="0"
                         aria-valuemin="0"
@@ -77,7 +76,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <form ref="formulaire" @submit.prevent="voir">
+                  <form ref="formulaire" @submit.prevent="inscription">
                     <!-- début de étape 1-->
                     <div v-show="step === 1">
                       <div class="row">
@@ -161,11 +160,11 @@
                                 Sélectionner votre pays
                               </option>
                               <option
-                                :value="country"
                                 v-for="country in countries"
                                 :key="country"
+                                :value="country.id"
                               >
-                                {{ country }}
+                                {{ country.name }}
                               </option>
                             </select>
                           </div>
@@ -294,11 +293,21 @@
                           <div class="form-group">
                             <label>Choisir son Département</label>
 
-                            <select class="form-select" required>
+                            <select
+                              class="form-select"
+                              v-model="formData.departementId"
+                              required
+                            >
                               <option value="">
                                 Selectionner votre departement
                               </option>
-                              <option value="test">test</option>
+                              <option
+                                v-for="(departement, index) in departements"
+                                :key="index"
+                                :value="departement.id"
+                              >
+                                {{ departement.departementName }}
+                              </option>
                             </select>
                           </div>
                         </div>
@@ -559,7 +568,8 @@ body {
 </style>
 
 <script>
-import countries from "@/data/countries.js";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 export default {
   name: "inscription",
@@ -568,25 +578,26 @@ export default {
       step: 1,
       isHalf: false,
       input_tel: "",
+      departements: [],
+      countries: [],
       formData: {
-        nom: "",
-        prenoms: "",
-        email: "",
-        password: "",
-        telephone: "",
-        quartier: "",
-        situationMatrimoniale: "",
-        sexe: "",
-        departementId: "",
-        ville: "",
-        dateNaissance: "",
-        anneeBapteme: "",
-        statutProfessionnel: "",
-        domaineActivite: "",
-        nombreEnfants: "",
-        paysId: "",
+        nom: "abba",
+        prenoms: "Isaac",
+        email: "abba8521@gmail.com",
+        password: "abba9900",
+        telephone: "+2250709174551",
+        quartier: "Riviera 2",
+        situationMatrimoniale: "CELIBATAIRE",
+        sexe: "M",
+        departementId: "7a192528-a5d4-4dd6-9362-9817c8569957",
+        ville: "Abidjan",
+        dateNaissance: "1997-07-04",
+        anneeBapteme: "2021-08-12",
+        statutProfessionnel: "ENTREPRENEUR",
+        domaineActivite: "Informatique",
+        nombreEnfants: 0,
+        paysId: "a8acf6e5-085b-471e-9b3e-736144cad6a1",
       },
-      countries: countries,
       stageClass: ["etape_1", "etape_2", "etape_3"],
       errorMessages: {
         nom: "Le nom est obligatoire",
@@ -623,12 +634,45 @@ export default {
     //   );
     // },
 
-    voir() {
-      console.log(this.formData);
+    obtenir_departements() {
+      axios
+        .get("https://msa-api.karamokoisrael.tech/departements")
+        .then((res) => {
+          this.departements = res.data;
+          console.log(this.departements);
+        })
+        .catch((err) => {})
+        .finally(() => {});
+    },
+    obtenir_pays() {
+      axios
+        .get("https://msa-api.karamokoisrael.tech/countries")
+        .then((res) => {
+          this.countries = res.data;
+          console.log(this.countries);
+        })
+        .catch((err) => {})
+        .finally(() => {});
+    },
+
+    inscription() {
+      axios
+        .post("https://msa-api.karamokoisrael.tech/membres", this.formData)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {});
     },
 
     previous() {
       this.step--;
+    },
+
+    voir() {
+      console.log(this.formData);
     },
 
     next() {
@@ -683,14 +727,34 @@ export default {
   },
 
   mounted() {
-    let formData = new FormData(this.$refs.editContribuablesForm);
-
+    this.obtenir_departements();
+    this.obtenir_pays();
     this.input_tel = document.querySelector("#phone");
 
     window.intlTelInput(this.input_tel, {
       utilsScript:
         "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
     });
+
+    // const swalWithBootstrapButtons = Swal.mixin({
+    //   customClass: {
+    //     confirmButton: "btn btn-success",
+    //     cancelButton: "btn btn-danger",
+    //   },
+    //   buttonsStyling: false,
+    // });
+    // swalWithBootstrapButtons.fire({
+    //   title: "Demo",
+    //   html: `Ceci est le formulaire d'inscription, Vous pouvez revenir  à la page d'accueil en appuyant sur <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3">MSA</a> ou                     <button class="btn btn-sm btn-round mb-0 me-1">
+    //                   <i class="fa fa-user opacity-6 text-dark me-1"></i>
+    //                   Accueil
+    //                 </button>`,
+    //   icon: "warning",
+    //   showCancelButton: false,
+    //   confirmButtonText: "ok",
+    //   reverseButtons: true,
+    //   footer: "<span>Application en cours de developpement...</span>",
+    // });
   },
 };
 </script>

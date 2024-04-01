@@ -21,7 +21,7 @@
           class="navbar-brand-img h-100"
           alt="main_logo"
         />
-        <a :href="'/'" class="ms-1 font-weight-bold">Tableau de bord</a>
+        <a :href="'/'" class="ms-1 font-weight-bold">Revenir à l'Accueil</a>
       </div>
       <hr class="horizontal dark mt-0" />
       <div class="navbar-collapse h-auto w-auto">
@@ -184,8 +184,8 @@
                       class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row"
                     >
                       <p>
-                        Welcome back, Bella! Your progress is really good. Keep
-                        it up
+                        Bienvenue, Wilfried! Tu peux voir ici les membres de ta
+                        colonne
                       </p>
                     </div>
                   </div>
@@ -209,7 +209,7 @@
                     style="width: 100%"
                     type="text"
                     class="form-control row"
-                    placeholder="Rechercher..."
+                    placeholder="Rechercher dans Achija..."
                     v-model="input_search"
                   />
                   <span
@@ -233,6 +233,7 @@
                 <ul class="list-group">
                   <li
                     v-for="item in printedItems"
+                    v-bind:key="item.id"
                     class="list-group-item row border-0 d-flex p-4 mb-2 border-radius-lg"
                     style="box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px"
                   >
@@ -316,7 +317,7 @@
                       <span class="sr-only" role="button">Previous</span>
                     </a>
                   </li>
-                  <template v-for="n in this.totalPage">
+                  <template v-for="(n, index) in this.totalPage" :key="index">
                     <li class="page-item" v-if="n < 4">
                       <a
                         class="page-link"
@@ -439,11 +440,13 @@ import { useloginStore } from "../stores/login";
 import image1 from "/src/assets/img/user1.png";
 import image2 from "/src/assets/img/user2.png";
 import image from "/src/assets/img/user.png";
+import axios from "axios";
 
 export default {
   data() {
     return {
       input_search: "",
+      colonnes: [],
       items: [
         {
           img: image1,
@@ -547,7 +550,7 @@ export default {
         },
       ],
       page: 1,
-      perPage: 3,
+      perPage: 2,
     };
   },
 
@@ -588,11 +591,47 @@ export default {
         this.page--;
       }
     },
+
+    afficher_les_colonnes() {
+      axios
+        .get(`https://msa-api.karamokoisrael.tech/colonnes/`)
+        .then((res) => {
+          this.colonnes = res.data;
+          console.log(this.colonnes);
+        })
+        .catch((err) => {})
+        .finally(() => {});
+    },
+
     nextElement() {
       if (this.page < this.totalPage) {
         this.page++;
       }
     },
+  },
+
+  created() {
+    this.afficher_les_colonnes();
+    //pop up demo
+    //     const swalWithBootstrapButtons = Swal.mixin({
+    //       customClass: {
+    //         confirmButton: "btn btn-success",
+    //         cancelButton: "btn btn-danger",
+    //       },
+    //       buttonsStyling: false,
+    //     });
+    //     swalWithBootstrapButtons.fire({
+    //       title: "Demo",
+    //       html: `Ceci est le tableau de bord imparfait et toujours en cours de developpement...⚙️
+    //  revenez à la page d'accueil en appuyant sur   <button class="btn btn-sm btn-round mb-0 me-1">
+    //                       Revenir à l'Accueil
+    //                     </button>`,
+    //       icon: "warning",
+    //       showCancelButton: false,
+    //       confirmButtonText: "ok",
+    //       reverseButtons: true,
+    //       footer: "<span>Application en cours de developpement...</span>",
+    //     });
   },
 };
 </script>

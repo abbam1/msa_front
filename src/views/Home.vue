@@ -73,7 +73,8 @@
 
 <script setup>
 import { onMounted } from "vue";
-import Navbar from "../components/navbar.vue";
+import Swal from "sweetalert2";
+import Navbar from "../components/Navbar.vue";
 
 //script d'appel pour le verset du jour
 onMounted(() => {
@@ -83,5 +84,42 @@ onMounted(() => {
     "https://dailyverses.net/get/verse.js?language=sg21"
   );
   document.head.appendChild(verseOfTheDay);
+
+  //script pour pop up demo
+  // const swalWithBootstrapButtons = Swal.mixin({
+  //   customClass: {
+  //     confirmButton: "btn btn-success",
+  //     cancelButton: "btn btn-danger",
+  //   },
+  //   buttonsStyling: false,
+  // });
+  // swalWithBootstrapButtons
+  //   .fire({
+  //     title: "Demo",
+  //     text: "Cette application est toujours en cours de développement, ceci est donc une demo!!!!",
+  //     icon: "warning",
+  //     showCancelButton: false,
+  //     confirmButtonText: "suivant",
+  //     reverseButtons: true,
+  //     footer: "<span>Application en cours de developpement...</span>",
+  //   })
+  //   .then((result) => {
+  //     if (result.isConfirmed) {
+  //       swalWithBootstrapButtons.fire({
+  //         title: "Demo!",
+  //         html: `Vous pouvez commencer par voir les formulaires en appuyant sur <button
+  //                   type="button"
+  //                   class="btn mt-4"
+  //                   style="background-color: #ecc071; color: white">Connexion</button> /<button
+  //                   type="button"
+  //                   class="btn shadow-none mt-4"
+  //                   style="color: #ecc071"> inscription</button> ou encore <a class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark">tableau de bord</a> pour entrer dans l'app.`,
+  //         icon: "warning",
+  //         footer: "<span>Application en cours de developpement...</span>",
+
+  //         confirmButtonText: "commencer",
+  //       });
+  //     }
+  //   });
 });
 </script>

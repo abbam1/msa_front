@@ -110,11 +110,12 @@
   </main>
 </template>
 <script>
-import Navbar from "../components/navbar.vue";
+import Navbar from "../components/Navbar.vue";
 import axios from "axios";
 
 export default {
   name: "connexion",
+  components: { Navbar },
   data() {
     return {
       formData: {
@@ -175,7 +176,28 @@ export default {
         });
     },
   },
-  components: { Navbar },
+
+  mounted() {
+    // const swalWithBootstrapButtons = Swal.mixin({
+    //   customClass: {
+    //     confirmButton: "btn btn-success",
+    //     cancelButton: "btn btn-danger",
+    //   },
+    //   buttonsStyling: false,
+    // });
+    // swalWithBootstrapButtons.fire({
+    //   title: "Demo",
+    //   html: `Ceci est le formulaire de connexion, Vous pouvez revenir  à la page d'accueil en appuyant sur <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3">MSA</a> ou                     <button class="btn btn-sm btn-round mb-0 me-1">
+    //                   <i class="fa fa-user opacity-6 text-dark me-1"></i>
+    //                   Accueil
+    //                 </button>`,
+    //   icon: "warning",
+    //   showCancelButton: false,
+    //   confirmButtonText: "ok",
+    //   reverseButtons: true,
+    //   footer: "<span>Application en cours de developpement...</span>",
+    // });
+  },
 };
 </script>
 <style scoped>

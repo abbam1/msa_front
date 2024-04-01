@@ -29,7 +29,7 @@
             <a
               :href="'/dashboard'"
               class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark"
-              >Dashboard</a
+              >Tableau de bord</a
             >
           </li>
         </ul>
